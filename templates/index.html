@@ -1,0 +1,221 @@
+    <!DOCTYPE html>
+    <html lang="en">
+
+    {% include 'include/head.html' %}
+
+    <body>
+        <div class="grid ">
+            <div class="grid__item grid__item--stack ">
+                <p class="grid__item-text text-5xl text-white">Snapshots from a diaspora <a href="https://www.aj91.online/">🌍</a></p>
+            </div>
+            <div class="flex flex-row w-screen h-screen justify-between mx-auto">
+                <div class="relative w-1/2">
+                    {% include 'include/Africa.svg' %}
+                    <div class="absolute top-[15%] left-[15%]   ">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        style="margin:auto;background:none;display:block;" width="280px" height="280px"
+                        viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="ripple">
+                        <circle cx="50" cy="50" r="0" fill="none" stroke="#fff" stroke-width="0.4">
+                            <animate attributeName="r" repeatCount="indefinite" dur="3s" values="0;40" keyTimes="0;1"
+                            keySplines="0 0.2 0.8 1" calcMode="spline" begin="0s"></animate>
+                            <animate attributeName="opacity" repeatCount="indefinite" dur="3s" values="1;0"
+                            keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline" begin="0s"></animate>
+                        </circle>
+                        <circle cx="50" cy="50" r="0" fill="none" stroke="#fff" stroke-width="0.4">
+                            <animate attributeName="r" repeatCount="indefinite" dur="3s" values="0;40" keyTimes="0;1"
+                            keySplines="0 0.2 0.8 1" calcMode="spline" begin="1s"></animate>
+                            <animate attributeName="opacity" repeatCount="indefinite" dur="3s" values="1;0"
+                            keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline" begin="1s"></animate>
+                        </circle>
+                        <circle cx="50" cy="50" r="0" fill="none" stroke="#fff" stroke-width="0.4">
+                            <animate attributeName="r" repeatCount="indefinite" dur="3s" values="0;40" keyTimes="0;1"
+                            keySplines="0 0.2 0.8 1" calcMode="spline" begin="2s"></animate>
+                            <animate attributeName="opacity" repeatCount="indefinite" dur="3s" values="1;0"
+                            keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline" begin="2s"></animate>
+                        </circle>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class='w-1/2'>
+                <p class="grid__item-copy text-white w-1/2">To be black is widely understood as someone of African descent. But 'blackness' as we understand it in the Western world fails to capture the multitude of distinct ethnic, linguistic, and cultural groups that exist on the African continent.</p>
+                <br>
+                <p class="grid__item-copy text-white w-1/2">Most African descendants in the diaspora will never set foot in their ancestral lands, and remain perpetually estranged from the lands of their forefathers. 
+                </p>
+                <br>
+                <p class="grid__item-copy text-white w-1/2">
+                    This series is dedicated to the lands from which we all originate from and the worlds we continue to build.
+                </p>
+
+
+            </div>
+        </div>
+
+
+        <div class="grid__item">
+            <div class="grid__item-inner my-8">
+                <div class="grid__item-img" style="background-image:url(static/door.jpg);"></div>
+                <p class="grid__item-text"><a href="#">View all projects →</a></p>
+            </div>
+        </div>
+        <div class="grid__item">
+            <div class="grid__item-inner my-8">
+                <div class="grid__item-img" style="background-image:url(static/moon.jpg);"></div>
+                <p class="grid__item-text"><a href="#">View all projects →</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    gsap.registerPlugin(ScrollTrigger);
+
+    // repeat first three items by cloning them and appending them to the .grid
+    const repeatItems = (parentEl, total = 0) => {
+        const items = [...parentEl.children];
+        for (let i = 0; i <= total-1; ++i) {
+            var cln = items[i].cloneNode(true);
+            parentEl.appendChild(cln);
+        }
+    };
+
+    const lenis = new Lenis({
+        smooth: true,
+        infinite: true
+    });
+
+    lenis.on('scroll',()=>{
+    ScrollTrigger.update() // Thank you Clément!
+})
+
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
+
+    imagesLoaded( document.querySelectorAll('.grid__item'), { background: true }, () => {
+
+        document.body.classList.remove('loading');
+
+        repeatItems(document.querySelector('.grid'), 1);
+
+        const items = [...document.querySelectorAll('.grid__item')];
+
+    // first item
+        const firstItem = items[0];
+        gsap.set(firstItem, {transformOrigin: '50% 100%'})
+        gsap.to(firstItem, {
+            ease: 'none',
+    //this controls the size of the first div 
+            startAt: {scaleY: 1},
+            scaleY: 0,
+            scrollTrigger: {
+                trigger: firstItem,
+                start: 'center center',
+                end: 'bottom top',
+                scrub: true,
+                fastScrollEnd: true,
+                onLeave: () => {
+                    gsap.set(firstItem, {scale: 1})
+                },
+            }
+        });
+
+    // last item  
+        const lastItem = items[2];
+        gsap.set(lastItem, {transformOrigin: '50% 50%', scale: .5})
+        gsap.to(lastItem, {
+            ease: 'none',
+            startAt: {scale: .1},
+            scale: 2,
+            scrollTrigger: {
+                trigger: lastItem,
+                start: 'top bottom',
+                end: 'center center',
+                scrub: true,
+                fastScrollEnd: true,
+                onLeave: () => { gsap.set(lastItem, {scale: 2, transformOrigin: '50% 50%'})
+
+            }
+        }
+    });
+
+    // in between
+        let ft;
+        let st;
+        const middleItem = items[1];
+
+
+        ft = gsap.timeline()
+        .to(middleItem, {
+            ease: 'none',
+            onStart: () => {
+                if (st) st.kill()
+            },
+        startAt: {scale: 0},
+        scale: 2,
+        scrollTrigger: {
+            trigger: middleItem,
+            start: 'top bottom',
+            end: 'center center',
+            scrub: true,
+            onEnter: () => gsap.set(middleItem, {transformOrigin: '50% 50%'}),
+            onEnterBack: () => gsap.set(middleItem, {transformOrigin: '50% 50%'}),
+            onLeave: () => gsap.set(middleItem, {transformOrigin: '50% 50%'}),
+            onLeaveBack: () => gsap.set(middleItem, {transformOrigin: '50% 50%'}),
+        },
+    });
+
+        st = gsap.timeline()
+        .to(middleItem, {
+            ease: 'none',
+            onStart: () => {
+                if (ft) ft.kill()
+            },
+        startAt: {scale: 2},
+        scale: 1.5,
+        scrollTrigger: {
+            trigger: middleItem,
+            start: 'center center',
+            end: 'bottom top',
+            scrub: true,
+            onEnter: () => gsap.set(middleItem, {transformOrigin: '50% 50%'}),
+            onEnterBack: () => gsap.set(middleItem, {transformOrigin: '50% 50%'}),
+            onLeave: () => gsap.set(middleItem, {transformOrigin: '50% 50%'}),
+            onLeaveBack: () => gsap.set(middleItem, {transformOrigin: '50% 0%'}),
+        },
+    });
+        st.to(lastItem, {
+            ease: 'none',
+            onStart: () => {
+                if (ft) ft.kill()
+            },
+        startAt: {scale: 2},
+        scale: .5,
+        scrollTrigger: {
+            trigger: lastItem,
+            start: 'center center',
+            end: 'bottom top',
+            scrub: true,
+            onEnter: () => gsap.set(lastItem, {transformOrigin: '50% 50%'}),
+            onEnterBack: () => gsap.set(lastItem, {transformOrigin: '50% 50%'}),
+            onLeave: () => gsap.set(lastItem, {transformOrigin: '50% 50%'}),
+            onLeaveBack: () => gsap.set(lastItem, {transformOrigin: '50% 50%'}),
+        },
+    });
+
+
+
+        requestAnimationFrame(raf);
+
+        const refresh = () => {
+            ScrollTrigger.clearScrollMemory();
+            window.history.scrollRestoration = 'manual';
+            ScrollTrigger.refresh(true);
+        }
+
+        refresh();
+        window.addEventListener('resize', refresh);
+
+    });
+</script>
+</html>

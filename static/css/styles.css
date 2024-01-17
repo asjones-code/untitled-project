@@ -1,0 +1,97 @@
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color:black;
+}
+
+@font-face {
+    font-family: "myFirstFont";
+    src: url(Comico-Regular.ttf);
+}
+
+@font-face {
+    font-family: "copy";
+    src: url(NectoMono-Regular.otf);
+}
+
+
+
+
+section {
+    height: 100vh;
+    padding: 0 clamp(4rem, 12vw, 20rem);
+    display: grid;
+    place-content: center;
+
+    p {
+        font-size: clamp(2rem, 5vw, 8rem);
+    }
+
+    &:nth-of-type(1) {
+        border-bottom: 1px solid black;
+    }
+
+    &:nth-of-type(3) {
+        background: #ffff00;
+    }
+
+    &:nth-of-type(4) {
+        background: rgb(29, 29, 29);
+        color: white;
+    }
+}
+
+#katman_1 {
+    width: 30%;
+    /* Set the width to 30% of the viewport */
+    margin: auto;
+    /* Center the SVG */
+    display: block;
+    /* Ensure block-level display for centering */
+}
+
+.grid {
+    display: flex;
+    flex-direction: column;
+    gap: 5vh;
+}
+
+.grid__item {
+    height: 100vh; 
+    place-items: center;
+    display: grid;
+}
+
+.grid__item-inner {
+    display: grid;
+    gap: 1rem;
+    place-items: center;
+    text-align: center;
+}
+
+.grid__item--stack {
+    display: grid;
+    gap: 2rem;
+    grid-template-rows: 1fr auto;
+}
+
+.grid__item-logo {
+    padding: 8rem 1rem 0;
+}
+
+.grid__item-img {
+    background-size: cover;
+    background-position: 50% 50%;
+    height: 70vh;
+    aspect-ratio: 1.5;
+}
+
+.grid__item-text {
+    margin: 0;
+    font-family: "myFirstFont";
+}
+
+.grid__item-copy {
+    margin: 0;
+    font-family: "copy";
+}
